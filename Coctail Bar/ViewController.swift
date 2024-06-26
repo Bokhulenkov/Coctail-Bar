@@ -50,21 +50,26 @@ class ViewController: UIViewController {
     private lazy var recipesLabel: UILabel = {
         let label = UILabel()
         label.text = "some text"
-        label.textAlignment = .justified
+        label.textAlignment = .left
+        label.numberOfLines = 0
         label.font = .systemFont(ofSize: 30, weight: .black)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     
-
+    var coctailManager = CoctailManager()
+    
     // MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setView()
         setConstraints()
+        
+        coctailManager.delegate = self
+        searchTextField.delegate = self
         
     }
     
@@ -72,8 +77,9 @@ class ViewController: UIViewController {
     
     @objc private func searchPressed() {
         print("Tap search Button")
+        
     }
-
+    
     // MARK: - Setup View
     
     func setView() {
@@ -89,7 +95,7 @@ class ViewController: UIViewController {
         mainStackView.addArrangedSubview(recipesLabel)
         
     }
-
+    
 }
 
 // MARK: - Extensions Constraints
@@ -110,5 +116,45 @@ extension ViewController {
             
             
         ])
+    }
+}
+
+// MARK: - Extensions TextField
+
+extension ViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchTextField.endEditing(true)
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if !textField.text!.isEmpty {
+            textField.placeholder = "Search coctail"
+            return true
+        } else {
+            textField.placeholder = "type some coctail name..."
+            return false
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        if let coctailName = searchTextField.text {
+            coctailManager.performRequest(coctailName)
+        }
+    }
+}
+
+// MARK: - Extensions CoctailManagerDelegate
+
+extension ViewController: CoctailManagerDelegate {
+    func didReceivCoctail(_ coctailManager: CoctailManager, coctailData: CoctailData) {
+        DispatchQueue.main.async {
+            self.recipesLabel.text = coctailData.instructions
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        print("We have parse error: \(error)")
     }
 }

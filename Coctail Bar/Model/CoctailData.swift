@@ -17,5 +17,4 @@ struct CoctailData: Codable {
 enum Constants {
     static let url = "https://api.api-ninjas.com/v1/cocktail?name="
     static let key = "TmPECHVV1YRDOUsjy2SRYw==pK001QOQwMlPKU1e"
-    static let name = "mojito".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
 }
