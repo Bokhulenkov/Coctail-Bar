@@ -76,8 +76,7 @@ class ViewController: UIViewController {
     // MARK: - Selectors
     
     @objc private func searchPressed() {
-        print("Tap search Button")
-        
+        searchTextField.endEditing(true)
     }
     
     // MARK: - Setup View
