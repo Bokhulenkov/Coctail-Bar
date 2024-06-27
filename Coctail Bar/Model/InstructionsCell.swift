@@ -7,12 +7,12 @@
 
 import UIKit
 
-class InstructionsCell: UITableViewCell {
+final class InstructionsCell: UITableViewCell {
     
     static let identifier = InstructionsCell.debugDescription()
     
-    let descriptionLabel: UILabel = {
-       let label = UILabel()
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
         label.textAlignment = .justified
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -39,5 +39,5 @@ class InstructionsCell: UITableViewCell {
     
     func configureCell(instructions: NSAttributedString) {
         descriptionLabel.attributedText = instructions
-       }
+    }
 }

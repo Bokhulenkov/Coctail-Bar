@@ -7,11 +7,11 @@
 
 import UIKit
 
-class IngredientsCell: UITableViewCell {
-   
+final class IngredientsCell: UITableViewCell {
+    
     static let identifier = IngredientsCell.debugDescription()
     
-    let descriptionLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 0

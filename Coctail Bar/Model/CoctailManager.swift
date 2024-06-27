@@ -31,6 +31,7 @@ struct CoctailManager {
         request.setValue(apiKey, forHTTPHeaderField: "X-Api-Key")
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let safeData = data else { return }
+            
             guard let coctailData = parseJSON(safeData) else { return }
             delegate?.didReceivCoctail(self, coctailData: coctailData)
         }
